@@ -94,14 +94,12 @@
             /* space between cd and text */
             gap: 80px;
             padding: 40px 24px;
-            /* starts shifted right so the cd looks centered, then glides left.
-               = (content width + gap) / 2  =  (400 + 80) / 2 */
             transform: translateX(240px);
             transition: transform 1.1s cubic-bezier(.22, 1, .36, 1);
         }
         .container.split-layout { transform: translateX(0); }
 
-        /* ---------- cd ---------- */
+        /*  cd  */
         .cd-wrapper {
             position: relative;
             width: var(--cd-size);
@@ -154,8 +152,6 @@
             border-radius: 50%;
             background: repeating-radial-gradient(circle, transparent 0 3px, rgba(255,255,255,.05) 3px 4px);
         }
-        /* light sweeping across the disc — this is what makes the spin visible.
-           without it the record is perfectly round and looks like it isn't moving */
         .vinyl::after {
             content: "";
             position: absolute;
@@ -172,14 +168,12 @@
                 rgba(255,255,255,.14)
             );
         }
-        /* slides out first (1s), then starts spinning. lower 6s = faster spin */
         .cd-wrapper.playing .vinyl {
             transform: translateX(20%);
             animation: spin 6s linear infinite 1s;
         }
         @keyframes spin { to { transform: translateX(20%) rotate(360deg); } }
 
-        /* record stops turning while the song is paused */
         .cd-wrapper.paused .vinyl { animation-play-state: paused; }
 
         .hint {
@@ -199,7 +193,6 @@
 
         /* right panel */
         .content {
-            /* keep this in sync with the 240px shift on .container above */
             width: 400px;
             flex-shrink: 0;
             opacity: 0;
@@ -211,7 +204,6 @@
         }
         .content.reveal { opacity: 1; pointer-events: auto; }
 
-        /* everything inside fades up one after another */
         @keyframes rise {
             from { opacity: 0; transform: translateY(18px); }
             to   { opacity: 1; transform: none; }
@@ -221,7 +213,6 @@
         .content.reveal .tagline     { animation-delay: .42s; }
         .content.reveal .badge       { animation-delay: .54s; }
         .content.reveal .player      { animation-delay: .66s; }
-        /* the links come in one by one */
         .content.reveal .socials     { animation: none; }
         .content.reveal .socials li  { animation: rise .6s cubic-bezier(.22, 1, .36, 1) both; }
         .content.reveal .socials li:nth-child(1) { animation-delay: .78s; }
@@ -287,7 +278,6 @@
             border-color: rgba(255,255,255,.4);
         }
 
-        /* the ring that keeps pinging so people notice it's clickable */
         .badge.live::before {
             content: "";
             position: absolute;
@@ -328,7 +318,7 @@
             margin-bottom: 22px;
         }
 
-        /* the tiny "now playing" line above the song */
+        /* "now playing" */
         .np-label {
             font-size: .6rem;
             letter-spacing: .22em;
@@ -501,7 +491,6 @@
             width: min(1000px, 100%);
             aspect-ratio: 16 / 9;
             background: #000;
-            /* same look as the cards on the page */
             border: 1px solid rgba(255,255,255,.1);
             border-radius: 14px;
             overflow: hidden;
@@ -514,7 +503,6 @@
         }
         .stream-box iframe { display: block; width: 100%; height: 100%; border: 0; }
 
-        /* close X — floats in the corner of the screen */
         .stream-close {
             position: absolute;
             top: 18px;
@@ -529,14 +517,11 @@
         }
         .stream-close:hover { color: #fff; }
 
-        /* below this width it stacks (cd on top, panel under it).
-           the side-by-side layout needs ~770px, so keep this at 760 */
         @media (max-width: 760px) {
             .stream { padding: 14px; }
             .stream-close { top: 8px; right: 10px; }
 
             body { align-items: flex-start; }
-            /* stacked, so no sideways shift — the cd just stays put */
             .container {
                 flex-direction: column;
                 gap: 48px;
@@ -546,7 +531,6 @@
             .cd-wrapper { width: 190px; height: 190px; }
             .cd-wrapper.playing .vinyl { transform: translateX(14%); }
             @keyframes spin { to { transform: translateX(14%) rotate(360deg); } }
-            /* hidden until opened, otherwise it takes up space below the cd */
             .content {
                 display: none;
                 width: 100%;
@@ -709,7 +693,7 @@
 
         audio.addEventListener('play', () => {
             playIcon.firstElementChild.setAttribute('d', ICON_PAUSE);
-            cdWrapper.classList.remove('paused');   // record starts turning again
+            cdWrapper.classList.remove('paused');  
         });
         audio.addEventListener('pause', () => {
             playIcon.firstElementChild.setAttribute('d', ICON_PLAY);
